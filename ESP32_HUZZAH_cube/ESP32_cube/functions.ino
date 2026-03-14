@@ -64,7 +64,7 @@ void angle_calc() {
   Wire.beginTransmission(MPU6050);
   Wire.write(0x43);
   Wire.endTransmission(false);
-  Wire.requestFrom(MPU6050, 6, true);  
+  Wire.requestFrom(MPU6050, 6);  
   GyX = Wire.read() << 8 | Wire.read(); // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
   GyY = Wire.read() << 8 | Wire.read(); // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ = Wire.read() << 8 | Wire.read(); // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
@@ -72,7 +72,7 @@ void angle_calc() {
   Wire.beginTransmission(MPU6050);
   Wire.write(0x3B);                  
   Wire.endTransmission(false);
-  Wire.requestFrom(MPU6050, 6, true); 
+  Wire.requestFrom(MPU6050, 6); 
   AcX = Wire.read() << 8 | Wire.read(); // 0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)
   AcY = Wire.read() << 8 | Wire.read(); // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
   AcZ = Wire.read() << 8 | Wire.read(); // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
@@ -92,7 +92,7 @@ void angle_calc() {
 
   angleX = robot_angleX;
   angleY = robot_angleY;
-  //SerialBT.print("AngleX: "); SerialBT.print(angleX); SerialBT.print(" AngleY: "); SerialBT.println(angleY); 
+  // SerialBT.print("AngleX: "); SerialBT.print(angleX); SerialBT.print(" AngleY: "); SerialBT.println(angleY); 
   
   if (abs(angleX - offsets.X2) < 2 && abs(angleY - offsets.Y2) < 0.6) {
     balancing_point = 2;
@@ -228,7 +228,7 @@ int Tuning() {
           beep();
         }
       }
-      break;              
+      break;
    }
    return 1;
 }
