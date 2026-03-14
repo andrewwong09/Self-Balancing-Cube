@@ -16,3 +16,6 @@ sudo su -c "echo 0 > /dev/rfcomm0"
 ```
 sudo screen /dev/rfcomm0
 ```
+
+# Programming the ESP32 HUZZAH Feather
+- Use v2.0.17 of esp32 by Espressif as suggested in [this Issue](https://github.com/espressif/arduino-esp32/issues/10309) to avoid `Compilation error: 'ledcSetup' was not declared in this scope ESP32 HUZZAH`.
