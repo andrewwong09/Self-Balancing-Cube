@@ -1,3 +1,5 @@
+#include "VoltageReader.h"
+
 #define BUZZER      27
 #define BUZZ_CH     7
 #define VBAT        34
@@ -18,6 +20,8 @@
 
 #define TIMER_BIT  8
 #define BASE_FREQ  20000
+
+VoltageReader battery(34, 33410.0, 9910.0);
 
 void pwmSet(uint8_t channel, uint32_t value) {
   ledcWrite(channel, value);
@@ -61,6 +65,7 @@ void buzz() {
 
 void setup() {
   Serial.begin(115200);
+  battery.begin();
   // pinMode(BUZZER, OUTPUT);
   ledcSetup(BUZZ_CH, 1000, 8);   // 1 kHz
   ledcAttachPin(BUZZER, BUZZ_CH);
@@ -95,6 +100,12 @@ void setup() {
 
 void loop() {
     Serial.println("Top of the loop");
+
+    float voltage = battery.readVoltage();
+    Serial.print("Input Voltage: ");
+    Serial.print(voltage, 3);
+    Serial.println(" V");
+
     Serial.println("Motor 1");
     buzz();
     Motor1_control(10);
