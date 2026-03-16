@@ -2,13 +2,16 @@
 #include <Wire.h>
 #include <EEPROM.h>
 #include "BluetoothSerial.h"
+#include "VoltageReader.h"
 
 BluetoothSerial SerialBT;
+VoltageReader battery(34, 33410.0, 9910.0);
 
 void setup() {
   Serial.begin(115200);
   SerialBT.begin("ESP32-Cube-blue"); //Bluetooth device name
   EEPROM.begin(EEPROM_SIZE);
+  battery.begin();
 
   ledcSetup(BUZZ_CH, 1000, 8);   // 1 kHz
   ledcAttachPin(BUZZER, BUZZ_CH);
@@ -103,8 +106,14 @@ void loop() {
     previousT_1 = currentT;
   }
   
-  if (currentT - previousT_2 >= 2000) {    
-    battVoltage((double)analogRead(VBAT) / 207); 
+  if (currentT - previousT_2 >= 2000) {
+    float voltage = battery.readVoltage();
+    battVoltage((double)voltage);
+    // Print status
+    String msg = "Input Voltage: " + String(voltage, 3) + " V";
+    Serial.println(msg);
+    SerialBT.println(msg);
+
     if (!calibrated && !calibrating) {
       SerialBT.println("first you need to calibrate the balancing points...");
     }
