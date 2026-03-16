@@ -1,4 +1,5 @@
 #define BUZZER      27
+#define BUZZ_CH     7
 #define VBAT        34
 
 #define BRAKE       26

@@ -9,7 +9,11 @@ void setup() {
   Serial.begin(115200);
   SerialBT.begin("ESP32-Cube-blue"); //Bluetooth device name
   EEPROM.begin(EEPROM_SIZE);
-  pinMode(BUZZER, OUTPUT);
+
+  ledcSetup(BUZZ_CH, 1000, 8);   // 1 kHz
+  ledcAttachPin(BUZZER, BUZZ_CH);
+  ledcWrite(BUZZ_CH, 0);       // 50% duty
+
   pinMode(BRAKE, OUTPUT);
   digitalWrite(BRAKE, HIGH);
   
@@ -33,9 +37,7 @@ void setup() {
     else calibrated = false;
     
   delay(2000);
-  digitalWrite(BUZZER, HIGH);
-  delay(70);
-  digitalWrite(BUZZER, LOW);
+  beep();
   angle_setup();
 }
 

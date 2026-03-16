@@ -6,10 +6,10 @@ void writeTo(byte device, byte address, byte value) {
 }
 
 void beep() {
-    digitalWrite(BUZZER, HIGH);
-    delay(70);
-    digitalWrite(BUZZER, LOW);
-    delay(80);
+  ledcWrite(BUZZ_CH, 128);   
+  delay(100);          // Wait for 0.1 second
+  ledcWrite(BUZZ_CH, 0);
+  delay(50);
 }
 
 void save() {
@@ -128,9 +128,9 @@ void XY_to_threeWay(float pwm_X, float pwm_Y) {
 void battVoltage(double voltage) {
   //Serial.print("batt: "); Serial.println(voltage); //debug
   if (voltage > 8 && voltage <= 9.5) {
-    digitalWrite(BUZZER, HIGH);
-  } else {
-    digitalWrite(BUZZER, LOW);
+    for (int i = 0; i < 5; i++) {
+      beep();
+    }
   }
 }
 
