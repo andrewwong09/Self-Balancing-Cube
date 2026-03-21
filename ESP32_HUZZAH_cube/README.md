@@ -7,6 +7,7 @@ After connecting / pairing to device on Ubuntu 22.04, passkey is presented and m
 ```
 # 40:91:51:1D:FE:6E is mac address of ESP32, which can be found with "bluetoothctl scan on"
 sudo rfcomm connect /dev/rfcomm0 40:91:51:1D:FE:6E 1
+sudo rfcomm connect /dev/rfcomm0 0C:DC:7E:CA:DD:36 1
 
 # Send serial command
 sudo su -c "echo 0 > /dev/rfcomm0"
